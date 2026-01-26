@@ -1,16 +1,25 @@
-var typed = new Typed('#text', {
-  strings: ['', 'Developer', 'Designer', 'Writer'],
-  typeSpeed: 100,
-  backSpeed: 100,
-  loop: true,
+// Dark mode
+const toggle = document.getElementById("themeToggle");
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
 });
 
-// SHOW SKILLS
-let skillBtn = document.querySelector('.skill_btn');
-let skillDet = document.querySelector('.about_bottom');
-
-if (skillBtn && skillDet) {
-  skillBtn.addEventListener('click', () => {
-    skillDet.classList.toggle('show_skills');
-  });
+// Resume modal
+function openResume() {
+  document.getElementById("resumeModal").style.display = "flex";
 }
+
+function closeResume() {
+  document.getElementById("resumeModal").style.display = "none";
+}
+
+// Scroll reveal
+const reveals = document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll", () => {
+  reveals.forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+      el.classList.add("active");
+    }
+  });
+});
