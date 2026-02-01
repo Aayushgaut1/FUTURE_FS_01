@@ -5,6 +5,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* ================= ROOT COLORS ================= */
 :root {
   --primary: #20c997;
   --dark: #111;
@@ -12,17 +13,42 @@
   --light: #f9f9f9;
 }
 
-body {
-  background: white;
+/* ================= DARK MODE VARIABLES (STEP 1) ================= */
+body.dark {
+  --dark: #f5f5f5;
+  --gray: #cfcfcf;
+  --light: #131c25;
+  background: #0f1720;
   color: var(--dark);
 }
 
-/* NAV */
+body {
+  background: white;
+  color: var(--dark);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+body.dark .contact-card {
+  background: #131c25;
+}
+
+body.dark .contact-item,
+body.dark .contact-socials a {
+  color: #e6eef0;
+}
+
+
+/* ================= NAV ================= */
 .nav {
   position: sticky;
   top: 0;
   background: white;
   z-index: 10;
+  transition: background 0.3s ease;
+}
+
+body.dark .nav {
+  background: #0f1720;
+  border-bottom: 1px solid #1e2a36;
 }
 
 .nav-container {
@@ -50,11 +76,22 @@ nav a:hover {
   color: var(--primary);
 }
 
-/* HERO */
+/* ================= TOGGLE BUTTON (STEP 3) ================= */
+#themeToggle {
+  margin-left: 20px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--dark);
+}
+
+/* ================= HERO ================= */
 .hero {
   padding: 80px 20px;
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
 }
 
 .hero::before {
@@ -64,10 +101,20 @@ nav a:hover {
   right: -200px;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle,
-      rgba(32, 201, 151, 0.18),
-      transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(32, 201, 151, 0.18),
+    transparent 70%
+  );
   z-index: 0;
+}
+
+body.dark .hero::before {
+  background: radial-gradient(
+    circle,
+    rgba(32, 201, 151, 0.25),
+    transparent 70%
+  );
 }
 
 .hero-container {
@@ -79,12 +126,17 @@ nav a:hover {
   align-items: center;
   position: relative;
   z-index: 1;
+}
 
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .badge {
   display: inline-block;
-  background: rgba(32, 201, 151, .1);
+  background: rgba(32, 201, 151, 0.1);
   color: var(--primary);
   padding: 6px 14px;
   border-radius: 20px;
@@ -98,12 +150,13 @@ nav a:hover {
   letter-spacing: -1px;
 }
 
-.name {
+.hero-name {
   color: var(--primary);
   font-weight: 800;
+  display: block;
 }
 
-.hero p {
+.hero-desc {
   margin: 20px 0;
   color: var(--gray);
   max-width: 520px;
@@ -131,20 +184,24 @@ nav a:hover {
   color: var(--primary);
 }
 
-/* HERO IMAGE */
+/* ================= HERO IMAGE ================= */
+.hero-image {
+  display: flex;
+  justify-content: center;
+}
+
 .hero-image img {
   width: 100%;
+  max-width: 420px;
   border-radius: 30px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
-  transform: rotate(-2deg);
-  transition: transform 0.4s ease;
 }
 
-.hero-image img:hover {
-  transform: rotate(0deg) scale(1.02);
+/* ================= SECTIONS ================= */
+section {
+  scroll-margin-top: 80px;
 }
 
-/* SECTIONS */
 .section-container {
   max-width: 1000px;
   margin: auto;
@@ -156,10 +213,11 @@ nav a:hover {
   margin-bottom: 30px;
 }
 
-/* ABOUT */
+/* ================= ABOUT ================= */
 .about-text {
   max-width: 800px;
   color: var(--gray);
+  line-height: 1.7;
 }
 
 .about-highlights {
@@ -173,14 +231,15 @@ nav a:hover {
   padding: 20px;
   border-radius: 16px;
   background: var(--light);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.highlight-box i {
-  font-size: 1.6rem;
-  color: var(--primary);
+.highlight-box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-/* PROJECTS */
+/* ================= PROJECTS ================= */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -193,7 +252,11 @@ nav a:hover {
   background: var(--light);
 }
 
-/* CONTACT */
+.project-card p {
+  color: var(--gray);
+}
+
+/* ================= CONTACT ================= */
 .contact-text {
   color: var(--gray);
 }
@@ -203,20 +266,15 @@ nav a:hover {
 }
 
 .contact-links a {
-  display: block;
-  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
   color: var(--dark);
 }
 
-.socials a {
-  margin-right: 14px;
-  font-size: 1.4rem;
-  color: var(--dark);
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* ================= RESPONSIVE ================= */
+@media (max-width: 600px) {
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;
@@ -227,7 +285,7 @@ nav a:hover {
   }
 }
 
-/* SCROLL ANIMATIONS */
+/* ================= SCROLL ANIMATION ================= */
 .reveal {
   opacity: 0;
   transform: translateY(40px);
@@ -237,4 +295,65 @@ nav a:hover {
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
+}
+.project-card ul {
+  margin: 12px 0;
+  padding-left: 18px;
+  color: var(--gray);
+  font-size: 0.95rem;
+}
+
+.project-card li {
+  margin-bottom: 6px;
+}
+
+.project-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.project-card a:hover {
+  text-decoration: underline;
+}
+/* CONTACT CARD */
+.contact-card {
+  margin-top: 40px;
+  padding: 30px;
+  border-radius: 20px;
+  background: var(--light);
+  max-width: 520px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--dark);
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.contact-item i {
+  font-size: 1.4rem;
+  color: var(--primary);
+}
+
+.contact-socials {
+  display: flex;
+  gap: 20px;
+}
+
+.contact-socials a {
+  font-size: 1.6rem;
+  color: var(--dark);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.contact-socials a:hover {
+  color: var(--primary);
+  transform: translateY(-3px);
 }

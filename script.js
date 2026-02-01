@@ -1,19 +1,24 @@
-// Dark mode
+// DARK MODE TOGGLE
 const toggle = document.getElementById("themeToggle");
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
 
-// Resume modal
-function openResume() {
-  document.getElementById("resumeModal").style.display = "flex";
+if (toggle) {
+  toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    // Save preference
+    localStorage.setItem(
+      "theme",
+      document.body.classList.contains("dark") ? "dark" : "light"
+    );
+  });
 }
 
-function closeResume() {
-  document.getElementById("resumeModal").style.display = "none";
+// Load saved theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
 }
 
-// Scroll reveal
+// SCROLL REVEAL
 const reveals = document.querySelectorAll(".reveal");
 
 window.addEventListener("scroll", () => {
